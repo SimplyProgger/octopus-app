@@ -21,7 +21,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   bool _isAvailable = false;
   bool _isListening = false;
 
-  String resultText;
+  String resultText = "";
 
   @override
   void initState() {
@@ -64,22 +64,20 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
         ),
-        child: TextFormField(
-        ),
+        child: Text(resultText)
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(_iconDataButton),
-        backgroundColor: _color,
         onPressed: () {
           setState(() {
             _isTap = true;
             _isTap ? _color = Colors.red : _color = Colors.pinkAccent;
             _isTap ? _iconDataButton = Icons.stop : _iconDataButton = Icons.mic;
           });
-          if(_isAvailable && _isListening)
+          if (_isAvailable && !_isListening)
             _speechRecognition
-              .listen(locale: "ru_RU")
-              .then((result) => print("$result"));
+                .listen(locale: "ru_RU")
+                .then((result) => print('$result'));
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -93,9 +91,18 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.keyboard),
+                    icon: Icon(Icons.stop),
                     iconSize: 35,
                     color: Colors.grey,
+                    onPressed: () {
+                      if (_isListening)
+                        _speechRecognition.stop().then(
+                              (result) => setState(() => _isListening = result),
+                        );
+                    },
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.cancel),
                     onPressed: () {
                       if (_isListening)
                         _speechRecognition.cancel().then(

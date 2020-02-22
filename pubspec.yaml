@@ -30,7 +30,7 @@ dependencies:
   google_sign_in:
   flutter_speed_dial:
   carousel_slider:
-  speech_recognition: ^0.3.0
+  speech_recognition:
 
 
 dev_dependencies:
