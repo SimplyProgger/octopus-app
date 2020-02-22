@@ -91,28 +91,12 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.stop),
+                    icon: Icon(Icons.keyboard),
                     iconSize: 35,
                     color: Colors.grey,
                     onPressed: () {
-                      if (_isListening)
-                        _speechRecognition.stop().then(
-                              (result) => setState(() => _isListening = result),
-                        );
                     },
                   ),
-                  IconButton(
-                    icon: Icon(Icons.cancel),
-                    onPressed: () {
-                      if (_isListening)
-                        _speechRecognition.cancel().then(
-                              (result) => setState(() {
-                            _isListening = result;
-                            resultText = "";
-                          }),
-                        );
-                    },
-                  )
                 ],
               )
             ],
