@@ -46,7 +46,7 @@ class SecondFragment extends StatelessWidget {
         SizedBox(height: 16,),
         Container(
           height: 240,
-        )
+        ),
       ],
     );
   }

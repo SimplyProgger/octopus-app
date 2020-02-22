@@ -31,6 +31,7 @@ dependencies:
   flutter_speed_dial:
   carousel_slider:
   speech_recognition:
+  flutter_tts:
 
 
 dev_dependencies:

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:octopus/pages/home_page.dart';
 import 'package:speech_recognition/speech_recognition.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({Key key}) : super(key: key);
@@ -18,10 +18,13 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
 
   SpeechRecognition _speechRecognition;
 
+
   bool _isAvailable = false;
   bool _isListening = false;
 
   String resultText = "";
+
+  final FlutterTts flutterTts = FlutterTts();
 
   @override
   void initState() {
@@ -55,7 +58,11 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
 
   @override
   Widget build( BuildContext context ) {
-    // TODO: implement build
+
+    Future speak() async {
+      await flutterTts.setLanguage("ru-RU");
+    }
+
     return new Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -64,20 +71,33 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
         ),
-        child: Text(resultText)
+        child: Container(
+          width: 350,
+          padding: EdgeInsets.only(top: 25,right: 150),
+          child: Center(
+            child: Text(resultText,),
+          ),
+          decoration: new BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: Colors.amberAccent,
+          ),
+        )
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(_iconDataButton),
         onPressed: () {
-          setState(() {
+          setState(()  {
             _isTap = true;
             _isTap ? _color = Colors.red : _color = Colors.pinkAccent;
             _isTap ? _iconDataButton = Icons.stop : _iconDataButton = Icons.mic;
+            flutterTts.speak("Меня звать Сабур");
           });
+
           if (_isAvailable && !_isListening)
             _speechRecognition
                 .listen(locale: "ru_RU")
                 .then((result) => print('$result'));
+          speak();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
