@@ -60,6 +60,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
   Widget build( BuildContext context ) {
 
     Future speak() async {
+      await flutterTts.setPitch(1);
       await flutterTts.setLanguage("ru-RU");
     }
 
@@ -90,7 +91,6 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
             _isTap = true;
             _isTap ? _color = Colors.red : _color = Colors.pinkAccent;
             _isTap ? _iconDataButton = Icons.stop : _iconDataButton = Icons.mic;
-            flutterTts.speak("Меня звать Сабур");
           });
 
           if (_isAvailable && !_isListening)
