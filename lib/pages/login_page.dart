@@ -70,12 +70,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _loginWithGoogle() async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
     try{
       await _googleSignIn.signIn();
       setState(() {
         _isLoggedInGoogle = true;
       });
+      if(_isLoggedInGoogle == true) {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+      }
     } catch (err){
       print(err);
     }

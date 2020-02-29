@@ -64,21 +64,6 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       await flutterTts.setLanguage("ru-RU");
     }
 
-    final GlobalKey<AnimatedListState> _listKey = GlobalKey();
-    List<String> _data = [];
-
-    void _insertSingleItem() {
-      int insertIndex;
-      if(_data.length > 0) {
-        insertIndex = _data.length;
-      }else{
-        insertIndex = 0;
-      }
-      String item = "Item insert index + 1";
-      _data.insert(insertIndex,item);
-      _listKey.currentState.insertItem(insertIndex);
-    }
-
     return new Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -88,18 +73,14 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
           borderRadius: BorderRadius.circular(30),
         ),
         child: Container(
-          width: 350,
-          padding: EdgeInsets.only(top: 25,right: 150),
-          child: AnimatedList(
-            key: _listKey,
-            initialItemCount: _data.length,
-            itemBuilder: (context,index,animation) {
-              return _buildItem(_data[index],animation,index);
-            },
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            gradient: LinearGradient(colors: [Colors.amber,Colors.amberAccent])
           ),
-          decoration: new BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: Colors.amberAccent,
+          child: Column(
+            children: <Widget>[
+              Text(resultText,style: TextStyle(color: Colors.black45,),),
+            ],
           ),
         ),
       ),
@@ -111,13 +92,11 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
             _isTap ? _color = Colors.red : _color = Colors.pinkAccent;
             _isTap ? _iconDataButton = Icons.stop : _iconDataButton = Icons.mic;
           });
-          _insertSingleItem();
 
           if (_isAvailable && !_isListening)
             _speechRecognition
                 .listen(locale: "ru_RU")
                 .then((result) => print('$result'));
-          speak();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -141,17 +120,6 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
               )
             ],
           ),
-        ),
-      ),
-    );
-  }
-  Widget _buildItem(String item,Animation animation,int index) {
-    return SizeTransition(
-      sizeFactor: animation,
-      child: Card(
-        elevation: 5.0,
-        child: ListTile(
-          title: Text(resultText,style: TextStyle(fontSize: 15),),
         ),
       ),
     );

@@ -6,6 +6,7 @@ import 'package:octopus/pages/fragments/five_fragment.dart';
 import 'package:octopus/pages/fragments/six_fragment.dart';
 import 'package:flutter/material.dart';
 import 'package:octopus/pages/Widgets/bottomsheetwidget.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 
 class DrawerItem {
@@ -63,7 +64,6 @@ class HomePageState extends State<HomePage> {
     setState(() => _selectedDrawerIndex = index);
     Navigator.of(context).pop(); // close the drawer
   }
-
 
 
 
@@ -129,7 +129,12 @@ class _MyFloatingActionButton extends State<MyFloatingButton> {
 
   String resultText = "";
 
+  final FlutterTts flutterTts = FlutterTts();
 
+  Future speak() async {
+    await flutterTts.setPitch(1);
+    await flutterTts.setLanguage("ru-RU");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -157,6 +162,7 @@ class _MyFloatingActionButton extends State<MyFloatingButton> {
           _iconData = Icons.menu;
           _color = Colors.blue;
         });
+        flutterTts.speak("Привет,меня зовут Спрутоняшка!");
       },
       ) : Container();
   }
